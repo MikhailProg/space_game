@@ -518,7 +518,7 @@ int main(void)
 	atexit(SDL_Quit);
 
 	flags = SDL_HWSURFACE | SDL_DOUBLEBUF;
-	screen = SDL_SetVideoMode(640, 480, 24, flags);
+	screen = SDL_SetVideoMode(W, H, 24, flags);
 	if (!screen)
 		errx(1, "SDL_SetVideoMode: %s", SDL_GetError());
 

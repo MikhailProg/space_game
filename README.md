@@ -18,9 +18,13 @@ $ make -C src
 ## Usage and run
 
 ARROWS to move a cross.
+
 SPACE to shoot.
+
 W to increase star field speed
+
 S to decrease star field speed.
+
 ESC to stop the game loop.
 
 ```

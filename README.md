@@ -1,6 +1,6 @@
 # 3D Software Game
 
-A small 3D software game. Only lines and dots are used for drawing with perspective projection.
+A small 3D software game. Only lines and dots are used for drawing (perspective projection).
 
 ## Build
 

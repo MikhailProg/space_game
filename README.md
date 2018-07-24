@@ -15,9 +15,13 @@ $ apt-get install libsdl1.2-dev
 $ make -C src
 ```
 
-## Run
+## Usage and run
 
-Use arrows to move a cross, SPACE to shoot, ESC to stop the game loop.
+ARROWS to move a cross.
+SPACE to shoot.
+W to increase star field speed
+S to decrease star field speed.
+ESC to stop the game loop.
 
 ```
 $ ./game

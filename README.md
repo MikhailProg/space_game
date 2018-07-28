@@ -21,7 +21,7 @@ ARROWS to move a cross.
 
 SPACE to shoot.
 
-W to increase your speed
+W to increase your speed.
 
 S to decrease your speed.
 

@@ -21,9 +21,9 @@ ARROWS to move a cross.
 
 SPACE to shoot.
 
-W to increase star field speed
+W to increase your speed
 
-S to decrease star field speed.
+S to decrease your speed.
 
 ESC to stop the game loop.
 

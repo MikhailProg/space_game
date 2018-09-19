@@ -54,7 +54,7 @@ enum {
 static Point		stars[1024];
 static Ship		ships[10];
 static Expl		expls[10];
-static SDL_Surface	*image;
+static SDL_Surface	*screen;
 static int		velocity = VELOCITY;
 static int		trigger;
 static int		trigger_state = TRIGGER_READY;
@@ -86,11 +86,11 @@ static void line_draw(int x1, int y1, int x2, int y2,
 	int dy = abs(y2 - y1), sy = y1 < y2 ? 1 : -1; 
 	int err = (dx > dy ? dx : -dy) / 2, e2;
 	unsigned char *pix;
-	int stride = image->pitch;
+	int stride = screen->pitch;
 
 	for (;;) {
 		if (!(x1 < 0 || x1 >= W || y1 < 0 || y1 >= H)) {
-			pix = image->pixels;
+			pix = screen->pixels;
 			pix += y1 * stride + 3 * x1;
 			pix[2] = r;
 			pix[1] = g;
@@ -355,7 +355,7 @@ static void stars_draw(void)
  
 	p = stars;
 	e = p + ARRSZ(stars);
-	stride = image->pitch;
+	stride = screen->pitch;
 
 	while (p < e) {
 		x = D * p->x / p->z;
@@ -368,7 +368,7 @@ static void stars_draw(void)
 		if (sx < 0 || sx >= W || sy < 0 || sy >= H || z > FAR)
 			continue;
 
-		pix = image->pixels;
+		pix = screen->pixels;
 		pix += sy * stride + 3 * sx;
 		s = (FAR - z) / (FAR - NEAR);
 		pix[0] = pix[1] = pix[2] = 255 * s;
@@ -509,7 +509,6 @@ static int event_dispatch(void)
 
 int main(void)
 {
-	SDL_Surface *screen;
 	int flags, q = 0;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -522,19 +521,13 @@ int main(void)
 	if (!screen)
 		errx(1, "SDL_SetVideoMode: %s", SDL_GetError());
 
-	image = SDL_CreateRGBSurface(SDL_HWSURFACE, screen->w, screen->h, 24,
-				   screen->format->Rmask, screen->format->Gmask,
-				   screen->format->Bmask, screen->format->Amask);
-	if (!image)
-		errx(1, "SDL_CreateRGBSurface: %s", SDL_GetError());
-
 	srand(time(NULL));
 	stars_init();
 	ships_init();
 
 	while (!q) {
 		q = event_dispatch();
-		SDL_FillRect(image, NULL, 0);
+		SDL_FillRect(screen, NULL, 0);
 
 		stars_update();
 		ships_update();
@@ -548,16 +541,12 @@ int main(void)
 		trigger_draw();
 		cross_draw();
 
-		if (SDL_BlitSurface(image, NULL, screen, NULL) < 0)
-			errx(1, "SDL_BlitSurface: %s", SDL_GetError());
-
 		if (SDL_Flip(screen) < 0)
 			errx(1, "SDL_Flip: %s", SDL_GetError());
 
 		SDL_Delay(33);
 	}
 
-	SDL_FreeSurface(image);
 	warnx("HITS: %d", hits);
 
 	return 0;
